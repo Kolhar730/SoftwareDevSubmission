@@ -22,17 +22,6 @@ let fileButton = document.getElementById('image-upload');
 
 const fireUser = firebase.auth().currentUser;
 
-function writeToDB(postName, pictureUrl, price, postDesc,uid, postKey, date) {
-  database.ref(`/users/${uid}/posts/${postKey}/`).set({
-        postName: postName,
-        postDesc: postDesc,
-        pictureUrl: pictureUrl,
-        likes: 0,
-        price: price,
-        date: date
-  });
-}
-
 
 var price = "2$";
 var postDesc = "A very nice thing.";
@@ -58,8 +47,9 @@ firebase.auth().onAuthStateChanged(function(fireUser) {
 
       var uid = fireUser.uid;
 
-      firebase.database().ref(`/feed/`).orderByChild(`/feed/`).on('value', function(data) {
+      firebase.database().ref().child(`feed`).on('value', function(data) {
         var main = data.val();
+        if (main == null) return;
         var keys = Object.keys(main);
         console.log(keys);
         for (var i = keys.length-1; i>=0;i--){
@@ -112,7 +102,14 @@ firebase.auth().onAuthStateChanged(function(fireUser) {
               },
               function complete() {
                 console.log("Upload completed successfully!");
-                writeToDB(postName, storageRef.fullPath,price,postDesc,uid, postKey, dateNow);
+                database.ref(`/users/${uid}/posts/${postKey}/`).set({
+                      postName: postName,
+                      postDesc: postDesc,
+                      pictureUrl: pictureUrl,
+                      likes: 0,
+                      price: price,
+                      date: date
+                });
               }
           );
 
