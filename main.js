@@ -1,12 +1,7 @@
 'use strict';
 
 var config = {
-  apiKey: "AIzaSyDruZl-qsV2PMkzlUqZcQKqlgTyJkfLW5o",
-  authDomain: "sf-dev-a1b8c.firebaseapp.com",
-  databaseURL: "https://sf-dev-a1b8c.firebaseio.com",
-  projectId: "sf-dev-a1b8c",
-  storageBucket: "sf-dev-a1b8c.appspot.com",
-  messagingSenderId: "996684137875"
+    // config information
 };
 firebase.initializeApp(config);
 
